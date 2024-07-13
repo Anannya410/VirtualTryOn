@@ -1,79 +1,138 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Animated } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
-import IconMC from "react-native-vector-icons/MaterialCommunityIcons";
-import { useNavigation } from "@react-navigation/native";
+// import React, { useState, useEffect } from 'react';
+// import { View, Text, StyleSheet, Image, Button } from 'react-native';
+// import { useNavigation } from '@react-navigation/native';
+// import { getLatestAvatar } from '../api/body_resize_api.js';
+
+// const Wardrobe = () => {
+//   const navigation = useNavigation();
+//   const [latestAvatar, setLatestAvatar] = useState(null);
+//   const [avatarName, setAvatarName] = useState('');
+
+//   const fetchLatestAvatar = async () => {
+//     try {
+//       const { avatar, name } = await getLatestAvatar();
+//       setLatestAvatar(avatar);
+//       setAvatarName(name);
+//     } catch (error) {
+//       console.error('Error fetching latest avatar:', error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchLatestAvatar();
+//   }, []);
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.title}>Style Studio</Text>
+//       {latestAvatar ? (
+//         <>
+//           <Image
+//             source={{ uri: `data:image/png;base64,${latestAvatar}` }}
+//             style={styles.avatarImage}
+//             resizeMode="contain"
+//           />
+//           <Text style={styles.imageName}>{avatarName}</Text>
+//         </>
+//       ) : (
+//         <Text>No avatar saved yet.</Text>
+//       )}
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   title: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//   },
+//   avatarImage: {
+//     width: 200,
+//     height: 200,
+//     marginBottom: 10,
+//   },
+//   imageName: {
+//     fontSize: 18,
+//     fontWeight: 'normal',
+//     marginBottom: 20,
+//   },
+// });
+
+// export default Wardrobe;
+
+
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { getLatestAvatar } from '../api/body_resize_api.js';
 
 const Wardrobe = () => {
-  const [icon_1] = useState(new Animated.Value(85));
-  const [icon_2] = useState(new Animated.Value(85));
-  const [pop, setPop] = useState(false);
   const navigation = useNavigation();
+  const [latestAvatar, setLatestAvatar] = useState(null);
+  const [avatarName, setAvatarName] = useState('');
 
-  const popIn = () => {
-    setPop(true);
-    Animated.timing(icon_1, {
-      toValue: 85,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(icon_2, {
-      toValue: 85,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
+  const fetchLatestAvatar = async () => {
+    try {
+      const { avatar, name } = await getLatestAvatar();
+      setLatestAvatar(avatar);
+      setAvatarName(name);
+    } catch (error) {
+      console.error('Error fetching latest avatar:', error);
+    }
   };
 
-  const popOut = () => {
-    setPop(false);
-    Animated.timing(icon_1, {
-      toValue: 160,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(icon_2, {
-      toValue: 235,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchLatestAvatar();
+    }, [])
+  );
 
   return (
-    <View style={{ flex: 1 }}>
-      <Animated.View style={[styles.circle, { bottom: icon_1 }]}>
-        <TouchableOpacity onPress={() => navigation.navigate("/")}>
-          <IconMC name="wardrobe-outline" size={28} color="#ffff" />
-        </TouchableOpacity>
-      </Animated.View>
-      <Animated.View style={[styles.circle, { bottom: icon_2 }]}>
-        <TouchableOpacity onPress={() => navigation.navigate("AvatarCreator")}>
-          <IconMC name="human-female" size={28} color="#ffff" />
-        </TouchableOpacity>
-      </Animated.View>
-      <TouchableOpacity
-        style={styles.circle}
-        onPress={() => {
-          pop === false ? popIn() : popOut();
-        }}
-      >
-        <Icon name="plus" size={25} color="#ffff" />
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.title}>Style Studio</Text>
+      {latestAvatar ? (
+        <>
+          <Image
+            source={{ uri: `data:image/png;base64,${latestAvatar}` }}
+            style={styles.avatarImage}
+            resizeMode="contain"
+          />
+          <Text style={styles.imageName}>{avatarName}</Text>
+        </>
+      ) : (
+        <Text>No avatar saved yet.</Text>
+      )}
     </View>
   );
 };
 
-export default Wardrobe;
-
 const styles = StyleSheet.create({
-  circle: {
-    backgroundColor: "#e32f45",
-    width: 60,
-    height: 60,
-    position: "absolute",
-    bottom: 85,
-    right: 25,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center",
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  avatarImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 10,
+  },
+  imageName: {
+    fontSize: 18,
+    fontWeight: 'normal',
+    marginBottom: 20,
   },
 });
+
+export default Wardrobe;

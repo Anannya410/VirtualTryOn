@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'userAPI',
     'body_resizer',
     'image_manager',
+    'avatar_manager',
     # 'userAuthentication',
     # 'allauth',
     # 'allauth.account',
