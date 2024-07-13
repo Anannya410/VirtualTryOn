@@ -46,7 +46,7 @@ const StyleStudio = () => {
         </TouchableOpacity>
       </Animated.View>
       <Animated.View style={[styles.circle, { bottom: icon_2 }]}>
-        <TouchableOpacity onPress={() => navigation.navigate("AvatarCreator")}>
+        <TouchableOpacity onPress={() => navigation.navigate("ChooseBody")}>
           <IconMC name="human-female" size={28} color="#ffff" />
         </TouchableOpacity>
       </Animated.View>

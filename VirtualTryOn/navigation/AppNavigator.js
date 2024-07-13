@@ -3,6 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./tabs";
 import AvatarCreator from "../screens/AvatarCreator";
+import ChooseBody from "../screens/ChooseBody";
+
 // import Login from "../screens/Login";
 // import Registration from "../screens/Registration";
 
@@ -17,6 +19,7 @@ const AppNavigator = () => {
       >
         <Stack.Screen name="MainTabs" component={Tabs} />
         <Stack.Screen name="AvatarCreator" component={AvatarCreator} />
+        <Stack.Screen name="ChooseBody" component={ChooseBody}/>
         {/* <Stack.Screen
           name="Login"
           component={Login}
