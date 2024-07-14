@@ -1,137 +1,63 @@
-// import React, { useState, useEffect } from 'react';
-// import { View, Text, StyleSheet, Image, Button } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-// import { getLatestAvatar } from '../api/body_resize_api.js';
+import React from 'react';
+import { View, Image, StyleSheet, ScrollView, Button, Alert } from 'react-native';
+import { postImage } from '../api/post_api';
+import Footer from './Community/Footer.js'
 
-// const Wardrobe = () => {
-//   const navigation = useNavigation();
-//   const [latestAvatar, setLatestAvatar] = useState(null);
-//   const [avatarName, setAvatarName] = useState('');
+const images = [
+  require('../assets/girlBodBgRemoved.png'),
+  require('../assets/littleGirl.jpeg'),
+  require('../assets/workGirl.png'),
+];
 
-//   const fetchLatestAvatar = async () => {
-//     try {
-//       const { avatar, name } = await getLatestAvatar();
-//       setLatestAvatar(avatar);
-//       setAvatarName(name);
-//     } catch (error) {
-//       console.error('Error fetching latest avatar:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchLatestAvatar();
-//   }, []);
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Style Studio</Text>
-//       {latestAvatar ? (
-//         <>
-//           <Image
-//             source={{ uri: `data:image/png;base64,${latestAvatar}` }}
-//             style={styles.avatarImage}
-//             resizeMode="contain"
-//           />
-//           <Text style={styles.imageName}>{avatarName}</Text>
-//         </>
-//       ) : (
-//         <Text>No avatar saved yet.</Text>
-//       )}
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     marginBottom: 20,
-//   },
-//   avatarImage: {
-//     width: 200,
-//     height: 200,
-//     marginBottom: 10,
-//   },
-//   imageName: {
-//     fontSize: 18,
-//     fontWeight: 'normal',
-//     marginBottom: 20,
-//   },
-// });
-
-// export default Wardrobe;
-
-
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { getLatestAvatar } from '../api/body_resize_api.js';
-
-const Wardrobe = () => {
-  const navigation = useNavigation();
-  const [latestAvatar, setLatestAvatar] = useState(null);
-  const [avatarName, setAvatarName] = useState('');
-
-  const fetchLatestAvatar = async () => {
-    try {
-      const { avatar, name } = await getLatestAvatar();
-      setLatestAvatar(avatar);
-      setAvatarName(name);
-    } catch (error) {
-      console.error('Error fetching latest avatar:', error);
+const Wardrobe = ({}) => {
+  const handlePost = async (imageUri, imageName) => {
+    const result = await postImage(imageUri, imageName);
+    if (result.success) {
+      Alert.alert(result.message);
+    } else {
+      Alert.alert('Failed to post image', result.message);
     }
   };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchLatestAvatar();
-    }, [])
-  );
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Style Studio</Text>
-      {latestAvatar ? (
-        <>
-          <Image
-            source={{ uri: `data:image/png;base64,${latestAvatar}` }}
-            style={styles.avatarImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.imageName}>{avatarName}</Text>
-        </>
-      ) : (
-        <Text>No avatar saved yet.</Text>
-      )}
-    </View>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        {images.map((image, index) => (
+          <View key={index} style={styles.imageContainer}>
+            <Image source={image} style={styles.image} />
+            <Button
+              title="Post"
+              onPress={() => handlePost(Image.resolveAssetSource(image).uri, `image_${index}.png`)}
+            />
+          </View>
+        ))}
+      </View>
+      <Footer/>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+  container: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
   },
-  avatarImage: {
+  imageContainer: {
+    alignItems: 'center',
+    margin: 10,
+  },
+  image: {
     width: 200,
-    height: 200,
-    marginBottom: 10,
-  },
-  imageName: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    marginBottom: 20,
+    height: 500,
+    marginBottom: 5,
   },
 });
 

@@ -75,7 +75,7 @@ export const getLatestAvatar = async () => {
     );
     return {
       avatar: response.data.image_data,
-      name: response.data.image_name, // Adjust according to your API response
+      name: response.data.image_name, 
     };
   } catch (error) {
     console.error("API Error:", error);

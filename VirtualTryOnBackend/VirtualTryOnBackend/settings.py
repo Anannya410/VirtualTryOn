@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import datetime
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,6 +34,9 @@ INSTALLED_APPS = [
     'body_resizer',
     'image_manager',
     'avatar_manager',
+    'outfit_manager',
+    'face_swap',
+    'wardrobe_manager',
     # 'userAuthentication',
     # 'allauth',
     # 'allauth.account',
@@ -154,6 +158,12 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
 }
 
 # SITE_ID = 1
@@ -187,10 +197,24 @@ CORS_ORIGIN_WHITELIST = [
     'http://192.168.29.201:8081', 
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:19000',   # Localhost
-#     'http://10.0.2.2:19000',    # Emulator loopback address
-#     'http://192.168.29.201:8081', # Your specific origin
-#     'http://192.168.103.162:8081', # Expo server IP address
-#     # Add any other origins you might use
-# ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
+
+
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB

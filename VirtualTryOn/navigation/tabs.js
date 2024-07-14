@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-import Community from "../screens/Community";
+import Community from "../screens/Community/Community";
 import MyDashboard from "../screens/MyDashboard";
 import PostScreen from "../screens/PostScreen";
 import StyleStudio from "../screens/StyleStudio";
