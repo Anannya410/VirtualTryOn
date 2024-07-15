@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 350,
+    height: 500,
     margin: 10,
   },
   errorText: {

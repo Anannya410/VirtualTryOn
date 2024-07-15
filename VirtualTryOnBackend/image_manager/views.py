@@ -1,21 +1,3 @@
-# import os
-# from django.conf import settings
-# from django.http import JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
-# from rest_framework.decorators import api_view
-
-# @csrf_exempt
-# @api_view(['GET'])
-# def list_images(request):
-#     image_dir = os.path.join(settings.STATIC_ROOT, 'assets')  # Assuming 'assets' is directly inside 'staticfiles'
-#     try:
-#         image_list = [f for f in os.listdir(image_dir) if os.path.isfile(os.path.join(image_dir, f))]
-#         images = [{'image_name': img, 'image_url': f"{settings.STATIC_URL}assets/{img}"} for img in image_list]
-#         return JsonResponse({'images': images})
-#     except OSError as e:
-#         return JsonResponse({'error': str(e)}, status=500)
-
-
 import os
 import base64
 from django.conf import settings
@@ -27,7 +9,7 @@ from rest_framework.decorators import api_view
 @csrf_exempt
 @api_view(['GET'])
 def list_images(request):
-    image_dir = os.path.join(settings.STATIC_ROOT, 'assets')  # Assuming 'assets' is directly inside 'staticfiles'
+    image_dir = os.path.join(settings.STATIC_ROOT, 'assets') 
     try:
         images = []
         for filename in os.listdir(image_dir):

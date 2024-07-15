@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 import Community from "../screens/Community/Community";
 import MyDashboard from "../screens/MyDashboard";
-import PostScreen from "../screens/PostScreen";
+import FashionScreen from "../screens/FashionScreen";
 import StyleStudio from "../screens/StyleStudio";
 import Wardrobe from "../screens/Wardrobe";
 
@@ -64,24 +64,6 @@ const Tabs = () => {
           </View>
         )
       }}/>
-      <Tab.Screen name="PostScreen" component={PostScreen} options={{
-        tabBarIcon: ({focused})=>(
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Image
-              source={require('../assets/icons/plus.png')}
-              resizeMode = 'contain'
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused? '#e32f45' : '#000000',
-              }}
-            />
-            <Text style={{color: focused? '#e32f45' : '#000000', fontSize: 10 }}>
-              Post
-            </Text>
-          </View>
-        )
-      }}/>
       <Tab.Screen name="Community" component={Community} options={{
         tabBarIcon: ({focused})=>(
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -96,6 +78,24 @@ const Tabs = () => {
             />
             <Text style={{color: focused? '#e32f45' : '#000000', fontSize: 10 }}>
               Community
+            </Text>
+          </View>
+        )
+      }}/>
+      <Tab.Screen name="FashionScreen" component={FashionScreen} options={{
+        tabBarIcon: ({focused})=>(
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Image
+              source={require('../assets/icons/catwalk.png')}
+              resizeMode = 'contain'
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: focused? '#e32f45' : '#000000',
+              }}
+            />
+            <Text style={{color: focused? '#e32f45' : '#000000', fontSize: 10 }}>
+              Runway
             </Text>
           </View>
         )

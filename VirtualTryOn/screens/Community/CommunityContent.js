@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     },
     contentImage: {
         width: '100%',
-        height: '100%', // Ensures the image maintains its aspect ratio
+        height: '100%', 
     },
     bottomContainer: {
         flexDirection: 'row',

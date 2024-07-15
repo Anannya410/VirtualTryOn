@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatarImage: {
-    width: 400, 
-    height: 500,
+    width: 200, 
+    height: 700,
     marginBottom: 100,
   },
   circle: {

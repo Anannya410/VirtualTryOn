@@ -1,11 +1,10 @@
-// post_api.js
 const convertToBase64 = async (uri) => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
         const reader = new FileReader();
         reader.onloadend = function () {
-          resolve(reader.result.split(',')[1]); // This will give us only the base64 string
+          resolve(reader.result.split(',')[1]); 
         };
         reader.readAsDataURL(xhr.response);
       };
@@ -28,7 +27,7 @@ const convertToBase64 = async (uri) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ image_name: imageName, image_data: base64Image }), // Send only the base64 string without prefix
+        body: JSON.stringify({ image_name: imageName, image_data: base64Image }), 
       });
   
       const responseText = await response.text();

@@ -1,5 +1,3 @@
-# outfit_manager/urls.py
-
 from django.urls import path
 from .views import save_clothed_avatar, get_saved_clothed_avatars
 

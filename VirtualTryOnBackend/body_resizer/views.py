@@ -162,7 +162,7 @@ def resize_body_parts(request, image_filename):
         # Place legs
         new_image[current_y:current_y + new_leg_height, :] = leg_part_resized
     
-        # Convert the image to a format that can be sent as a response
+        # Convert the image to base64 format
         _, buffer = cv2.imencode('.png', new_image)
         response_data = base64.b64encode(buffer).decode('utf-8')
     

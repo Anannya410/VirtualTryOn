@@ -14,60 +14,30 @@ def apply_affine_transform(src, src_tri, dst_tri, size):
     dst = cv2.warpAffine(src, warp_mat, (size[0], size[1]), None, flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT_101)
     return dst
 
-# def warp_triangle(img1, img2, t1, t2):
-#     r1 = cv2.boundingRect(np.float32([t1]))
-#     r2 = cv2.boundingRect(np.float32([t2]))
-    
-#     t1_rect = []
-#     t2_rect = []
-#     t2_rect_int = []
-    
-#     for i in range(3):
-#         t1_rect.append(((t1[i][0] - r1[0]),(t1[i][1] - r1[1])))
-#         t2_rect.append(((t2[i][0] - r2[0]),(t2[i][1] - r2[1])))
-#         t2_rect_int.append(((t2[i][0] - r2[0]),(t2[i][1] - r2[1])))
-
-#     img1_rect = img1[r1[1]:r1[1] + r1[3], r1[0]:r1[0] + r1[2]]
-#     size = (r2[2], r2[3])
-    
-#     img2_rect = apply_affine_transform(img1_rect, t1_rect, t2_rect, size)
-#     mask = np.zeros((r2[3], r2[2], 3), dtype=np.float32)
-    
-#     cv2.fillConvexPoly(mask, np.int32(t2_rect_int), (1.0, 1.0, 1.0), 16, 0)
-    
-#     img2_rect = img2_rect * mask
-#     img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] = img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] * ((1.0, 1.0, 1.0) - mask)
-#     img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] = img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] + img2_rect
-
 def warp_triangle(img1, img2, t1, t2):
     r1 = cv2.boundingRect(np.float32([t1]))
     r2 = cv2.boundingRect(np.float32([t2]))
-    
-    # Expand the bounding rectangles to cover more area if needed
-    expanded_r1 = (max(r1[0] - 10, 0), max(r1[1] - 10, 0), min(r1[2] + 20, img1.shape[1] - r1[0]), min(r1[3] + 20, img1.shape[0] - r1[1]))
-    expanded_r2 = (max(r2[0] - 10, 0), max(r2[1] - 10, 0), min(r2[2] + 20, img2.shape[1] - r2[0]), min(r2[3] + 20, img2.shape[0] - r2[1]))
     
     t1_rect = []
     t2_rect = []
     t2_rect_int = []
     
     for i in range(3):
-        t1_rect.append(((t1[i][0] - expanded_r1[0]), (t1[i][1] - expanded_r1[1])))
-        t2_rect.append(((t2[i][0] - expanded_r2[0]), (t2[i][1] - expanded_r2[1])))
-        t2_rect_int.append(((t2[i][0] - expanded_r2[0]), (t2[i][1] - expanded_r2[1])))
+        t1_rect.append(((t1[i][0] - r1[0]),(t1[i][1] - r1[1])))
+        t2_rect.append(((t2[i][0] - r2[0]),(t2[i][1] - r2[1])))
+        t2_rect_int.append(((t2[i][0] - r2[0]),(t2[i][1] - r2[1])))
 
-    img1_rect = img1[expanded_r1[1]:expanded_r1[1] + expanded_r1[3], expanded_r1[0]:expanded_r1[0] + expanded_r1[2]]
-    size = (expanded_r2[2], expanded_r2[3])
+    img1_rect = img1[r1[1]:r1[1] + r1[3], r1[0]:r1[0] + r1[2]]
+    size = (r2[2], r2[3])
     
     img2_rect = apply_affine_transform(img1_rect, t1_rect, t2_rect, size)
-    mask = np.zeros((expanded_r2[3], expanded_r2[2], 3), dtype=np.float32)
+    mask = np.zeros((r2[3], r2[2], 3), dtype=np.float32)
     
     cv2.fillConvexPoly(mask, np.int32(t2_rect_int), (1.0, 1.0, 1.0), 16, 0)
     
     img2_rect = img2_rect * mask
-    img2[expanded_r2[1]:expanded_r2[1] + expanded_r2[3], expanded_r2[0]:expanded_r2[0] + expanded_r2[2]] = img2[expanded_r2[1]:expanded_r2[1] + expanded_r2[3], expanded_r2[0]:expanded_r2[0] + expanded_r2[2]] * ((1.0, 1.0, 1.0) - mask)
-    img2[expanded_r2[1]:expanded_r2[1] + expanded_r2[3], expanded_r2[0]:expanded_r2[0] + expanded_r2[2]] = img2[expanded_r2[1]:expanded_r2[1] + expanded_r2[3], expanded_r2[0]:expanded_r2[0] + expanded_r2[2]] + img2_rect
-
+    img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] = img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] * ((1.0, 1.0, 1.0) - mask)
+    img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] = img2[r2[1]:r2[1] + r2[3], r2[0]:r2[0] + r2[2]] + img2_rect
 
 def swap_faces(img1_path, img2_path, predictor_path):
     img1 = cv2.imread(img1_path)

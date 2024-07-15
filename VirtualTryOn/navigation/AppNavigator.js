@@ -7,9 +7,6 @@ import ChooseBody from "../screens/ChooseBody";
 import Wardrobe from "../screens/Wardrobe";
 import FaceSwap from "../screens/FaceSwap";
 
-// import Login from "../screens/Login";
-// import Registration from "../screens/Registration";
-
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {

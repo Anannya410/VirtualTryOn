@@ -4,9 +4,13 @@ import { postImage } from '../api/post_api';
 import Footer from './Community/Footer.js'
 
 const images = [
-  require('../assets/girlBodBgRemoved.png'),
-  require('../assets/littleGirl.jpeg'),
-  require('../assets/workGirl.png'),
+  require('../assets/wardrobe/girlBodBgRemoved.png'),
+  require('../assets/wardrobe/littleGirl.jpeg'),
+  require('../assets/wardrobe/workGirl.png'),
+  require('../assets/wardrobe/dress1.jpeg'),
+  require('../assets/wardrobe/dress2.jpeg'),
+  require('../assets/wardrobe/dress3.jpeg'),
+  require('../assets/wardrobe/dress4.jpeg'),
 ];
 
 const Wardrobe = ({}) => {
